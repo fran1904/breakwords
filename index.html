@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <h1>String Separator Machine</h1>
+    <form action="return false">
+      <!-- Input sentence -->
+      <label for="input-text">Enter your sentence:</label><br />
+      <input type="text" id="input-text" name="input-text" />
+      <br />
+      <!-- Input for divide sentence -->
+      <label for="divide-at">Enter your desired breakpoint</label><br />
+      <input type="text" id="divide-at" name="divide-at" /><br /><br />
+
+      <!-- divide before radio -->
+      <input type="radio" id="before" name="myradio" />
+      <label for="divide before">Divide before</label><br />
+
+      <!-- divide after radio -->
+      <input type="radio" id="after" name="myradio" />
+      <label for="divide after">Divide after</label><br /><br />
+    </form>
+
+    <button onclick="divideSentence()">Divide Sentence</button>
+    <br />
+
+    <h2>Output</h2>
+
+    <h3>First part</h3>
+    <p id="first-part"></p>
+
+    <h3>Second part</h3>
+    <p id="second-part"></p>
+  </body>
+
+  <script>
+    let divideSentence = () => {
+      event.preventDefault();
+      let sentenceInput = document.getElementById("input-text").value;
+      let breakpointString = document.getElementById("divide-at").value;
+      let beforeRadio = document.getElementById("before");
+      let afterRadio = document.getElementById("after");
+      let requiredIndexNumber = 0;
+      let firstString = "";
+      let secondString = "";
+      let outputOneContainer = document.getElementById("first-part");
+      let outputTwoContainer = document.getElementById("second-part");
+
+      if (sentenceInput.indexOf(breakpointString) == -1) {
+        outputOneContainer.innerHTML =
+          "You must enter a valid breakpoint string";
+        outputTwoContainer.innerHTML =
+          "You must enter a valid breakpoint string";
+      } else if (beforeRadio.checked) {
+        requiredIndexNumber = sentenceInput.indexOf(breakpointString);
+        firstString = sentenceInput.slice(0, requiredIndexNumber);
+        secondString = sentenceInput.slice(
+          requiredIndexNumber,
+          sentenceInput.length
+        );
+        outputOneContainer.innerHTML = firstString;
+        outputTwoContainer.innerHTML = secondString;
+      } else if (afterRadio.checked) {
+        let breakpointStringLength = breakpointString.length;
+        requiredIndexNumber = sentenceInput.indexOf(breakpointString);
+        let newRequiredIndexNumber =
+          requiredIndexNumber + breakpointStringLength;
+        outputOneContainer.innerHTML = newRequiredIndexNumber;
+        firstString = sentenceInput.slice(0, newRequiredIndexNumber);
+        secondString = sentenceInput.slice(
+          newRequiredIndexNumber,
+          sentenceInput.length
+        );
+        outputOneContainer.innerHTML = firstString;
+        outputTwoContainer.innerHTML = secondString;
+      }
+    };
+  </script>
+</html>
